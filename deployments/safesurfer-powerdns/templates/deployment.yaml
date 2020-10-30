@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "safesurfer-powerdns.fullname" . }}
+  labels:
+    app: safesurfer-powerdns
+  {{- if .Values.extraLabels }}
+    {{- toYaml .Values.extraLabels | nindent 4 }}
+  {{- end }}
+    {{- include "safesurfer-powerdns.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  selector:
+    matchLabels:
+      app: safesurfer-powerdns
+      {{- include "safesurfer-powerdns.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+    {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      labels:
+        app: safesurfer-powerdns
+        {{- include "safesurfer-powerdns.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "safesurfer-powerdns.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      dnsPolicy: {{ .Values.dnsPolicy | default "ClusterFirst" }}
+      hostNetwork: {{ .Values.hostNetwork }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: dns
+              containerPort: 5353
+              protocol: UDP
+            - name: dns-tcp
+              containerPort: 5353
+              protocol: TCP
+          readinessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "dig '@127.0.0.1' -p 5353 +noall +answer +notcp google.com"
+            timeoutSeconds: 20
+            initialDelaySeconds: 3
+            periodSeconds: 10
+            successThreshold: 3
+            failureThreshold: 2
+          livenessProbe:
+            exec:
+              command:
+                - /bin/sh
+                - -c
+                - "dig '@127.0.0.1' -p 5353 +noall +answer +notcp google.com"
+            timeoutSeconds: 20
+            initialDelaySeconds: 3
+            periodSeconds: 3
+            failureThreshold: 3
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          env:
+            {{- toYaml .Values.extraEnv | nindent 12 }}
+          volumeMounts:
+            - name: app-lmdbtmpfs
+              mountPath: /app/lmdbtmpfs
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: app-lmdbtmpfs
+          emptyDir: {}
