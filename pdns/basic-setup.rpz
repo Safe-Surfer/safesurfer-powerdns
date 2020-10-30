@@ -1,0 +1,24 @@
+$TTL    604800
+@       IN      SOA     localhost. root.localhost. (
+                         1497402003      ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800        ; Negative Cache TTL
+                        )
+@       IN      NS      localhost.
+
+check.safesurfer        A       130.211.44.88
+check.safesurfer.co.nz	A	130.211.44.88
+*.check.safesurfer.co.nz  A       130.211.44.88
+
+; block.opendns.com ip addresses redirection (IPs 146.112.61.105-110)
+32.105.61.112.146.rpz-ip CNAME block.safesurfer.net.nz.
+32.106.61.112.146.rpz-ip CNAME block.safesurfer.net.nz.
+32.107.61.112.146.rpz-ip CNAME block.safesurfer.net.nz.
+32.108.61.112.146.rpz-ip CNAME block.safesurfer.net.nz.
+32.109.61.112.146.rpz-ip CNAME block.safesurfer.net.nz.
+32.110.61.112.146.rpz-ip CNAME block.safesurfer.net.nz.
+
+; NXDOMAIN for firefox DNS over HTTPS - flag to disable DoH for anyone using this server
+use-application-dns.net CNAME .
