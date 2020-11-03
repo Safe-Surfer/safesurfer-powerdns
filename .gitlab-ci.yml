@@ -50,7 +50,7 @@ lint_helm_chart:
         fi
     - cat helm.tar.gz | tar --directory /usr/local/bin --extract -xz --strip-components 1 linux-amd64/helm
   script:
-    - helm lint deployments/minio-file-server
+    - helm lint deployments/safesurfer-powerdns
 
 build:
   stage: build
