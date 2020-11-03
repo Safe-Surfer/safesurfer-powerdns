@@ -10,11 +10,12 @@ metadata:
     {{- include "safesurfer-powerdns.labels" . | nindent 4 }}
 spec:
   type: {{ .Values.service.type }}
+  externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
   ports:
     - port: {{ .Values.service.port }}
       targetPort: 5353
       protocol: UDP
-      name: dns
+      name: dns-udp
   selector:
     app: safesurfer-powerdns
     {{- include "safesurfer-powerdns.selectorLabels" . | nindent 4 }}

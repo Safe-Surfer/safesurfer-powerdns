@@ -43,7 +43,8 @@ securityContext:
 service:
   type: ClusterIP
   port: 53
-  tcpEnabled: true
+  externalTrafficPolicy: Cluster
+  tcpEnabled: false
 
 resources:
   requests:
