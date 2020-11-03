@@ -1,0 +1,26 @@
+site_name: SafeSurfer-PowerDNS
+strict: true
+repo_name: "safesurfer/safesurfer-powerdns"
+repo_url: https://gitlab.com/safesurfer/safesurfer-powerdns
+site_url: https://safesurfer.gitlab.io/safesurfer-powerdns
+
+markdown_extensions:
+  - codehilite
+  - meta
+  - toc:
+      permalink: " ¶"
+
+theme:
+  name: material
+  features:
+    - tabs
+    - instant
+  palette:
+    primary: "blue"
+    accent: "green"
+
+nav:
+  - Welcome: index.md
+  - Development: development.md
+  - Configuration: configuration.md
+  - Deployment: deployment.md

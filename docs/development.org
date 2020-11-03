@@ -1,22 +1,12 @@
 #+TITLE: Development
 
-* Helm
-Create the namespace:
-#+begin_src bash :results silent :dir .././
-  kubectl create namespace safesurfer-powerdns
+* Quick pattern
+Tilt provides a quick development lifecycle - when a change occurs, a new container image is build and the Helm chart is redeployed
+#+begin_src tmate :session tilt :window safesurfer-powerdns
+  tilt up --host 0.0.0.0 --hud
 #+end_src
 
-Install:
-#+begin_src bash :results silent :dir .././
-  helm install safesurfer-powerdns -n safesurfer-powerdns deployments/safesurfer-powerdns
-#+end_src
-
-Upgrade:
-#+begin_src bash :results silent :dir .././
-  helm upgrade safesurfer-powerdns -n safesurfer-powerdns deployments/safesurfer-powerdns
-#+end_src
-
-Uninstall:
-#+begin_src bash :results silent :dir .././
-  helm uninstall safesurfer-powerdns -n safesurfer-powerdns
+* Docs
+#+begin_src tmate :session docs :window safesurfer-powerdns
+docker run --rm -it -p 8000:8000 -v ${PWD}:/docs:ro,Z squidfunk/mkdocs-material
 #+end_src

@@ -36,7 +36,6 @@ podSecurityContext: {}
 securityContext:
   readOnlyRootFilesystem: true
   runAsNonRoot: true
-  privileged: false
   runAsUser: 250
   runAsGroup: 250
 

@@ -1,0 +1,5 @@
+#+TITLE: Safe Surfer PowerDNS
+
+#+begin_quote
+A PowerDNS distribution from Safe Surfer
+#+end_quote

@@ -1,0 +1,22 @@
+#+TITLE: Deployment
+
+* Helm
+Create the namespace:
+#+begin_src bash :results silent :dir .././
+  kubectl create namespace safesurfer-powerdns
+#+end_src
+
+Install:
+#+begin_src bash :results silent :dir .././
+  helm install safesurfer-powerdns -n safesurfer-powerdns deployments/safesurfer-powerdns
+#+end_src
+
+Upgrade:
+#+begin_src bash :results silent :dir .././
+  helm upgrade safesurfer-powerdns -n safesurfer-powerdns deployments/safesurfer-powerdns
+#+end_src
+
+Uninstall:
+#+begin_src bash :results silent :dir .././
+  helm uninstall safesurfer-powerdns -n safesurfer-powerdns
+#+end_src
