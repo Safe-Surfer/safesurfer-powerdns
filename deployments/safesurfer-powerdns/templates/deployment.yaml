@@ -45,7 +45,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: dns
+            - name: dns-udp
               containerPort: 5353
               protocol: UDP
             - name: dns-tcp
