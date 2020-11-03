@@ -1,5 +1,7 @@
 stages:
+  - lint
   - build
+  - pages
 
 .kaniko-build-pre-script: &kaniko-build-pre-script |
   set -x
@@ -32,6 +34,24 @@ stages:
     --destination $CI_REGISTRY_IMAGE:latest$BRANCH_NAME \
     $KANIKO_EXTRA_DESTINATION
 
+lint_helm_chart:
+  stage: lint
+  image: alpine:3.11
+  variables:
+    HELM_LINK: https://get.helm.sh/helm-v3.4.0-linux-amd64.tar.gz
+    HELM_HASH: 270acb0f085b72ec28aee894c7443739271758010323d72ced0e92cd2c96ffdb
+  allow_failure: true
+  before_script:
+    - apk add curl
+    - curl -L -o helm.tar.gz $HELM_LINK
+    - |
+        if [ ! $(sha256sum helm.tar.gz) = $HELM_HASH ]; then
+          exit 1
+        fi
+    - cat helm.tar.gz | tar --directory /usr/local/bin --extract -xz --strip-components 1 linux-amd64/helm
+  script:
+    - helm lint deployments/minio-file-server
+
 build:
   stage: build
   image:
@@ -43,3 +63,17 @@ build:
     - *kaniko-pre-build-release-version
   script:
     - *kaniko-build
+
+pages:
+  image: python:3.8-buster
+  stage: pages
+  before_script:
+    - pip install mkdocs-material
+  script:
+  - mkdocs build
+  - mv site public
+  artifacts:
+    paths:
+    - public
+  only:
+    - master
