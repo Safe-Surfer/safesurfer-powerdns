@@ -15,9 +15,9 @@ nameOverride: ""
 fullnameOverride: ""
 
 extraEnv: []
-extraLabels: []
+extraLabels: {}
 dnsPolicy: ClusterFirst #WithHostNet
-hostNetwork: true
+hostNetwork: false
 
 serviceAccount:
   # Specifies whether a service account should be created
