@@ -1,10 +1,13 @@
-#+TITLE: Safe Surfer PowerDNS (WIP)
+#+TITLE: Safe Surfer PowerDNS
 
 #+begin_quote
 A PowerDNS distribution from Safe Surfer
 #+end_quote
 
 * Docs
-
+Docs are located in the [[./docs/][docs]] folder, as well as [[https://safesurfer.gitlab.com/safesurfer-powerdns][on GitLab pages]].
 
 * License
+Copyright 2020 Safe Surfer.
+This project is licensed under the [[http://www.gnu.org/licenses/agpl-3.0.html][AGPL-3.0]] and is [[https://www.gnu.org/philosophy/free-sw.en.html][Free Software]].
+This program comes with absolutely no warranty.
