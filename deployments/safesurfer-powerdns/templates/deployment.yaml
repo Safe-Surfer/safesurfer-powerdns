@@ -24,6 +24,9 @@ spec:
     {{- end }}
       labels:
         app: safesurfer-powerdns
+      {{- if .Values.extraLabels }}
+        {{- toYaml .Values.extraLabels | nindent 8 }}
+      {{- end }}
         {{- include "safesurfer-powerdns.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
