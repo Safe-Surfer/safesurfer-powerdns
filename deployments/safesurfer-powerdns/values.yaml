@@ -44,6 +44,7 @@ service:
   port: 53
   externalTrafficPolicy: Cluster
   tcpEnabled: false
+  externalIPs: []
 
 resources:
   requests:
