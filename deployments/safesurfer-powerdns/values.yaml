@@ -16,6 +16,7 @@ fullnameOverride: ""
 
 extraEnv: []
 extraLabels: {}
+dnsConfig: {}
 dnsPolicy: ClusterFirst #WithHostNet
 hostNetwork: false
 
@@ -42,7 +43,7 @@ securityContext:
 service:
   type: ClusterIP
   port: 53
-  externalTrafficPolicy: Cluster
+  externalTrafficPolicy: ""
   tcpEnabled: false
   externalIPs: []
 

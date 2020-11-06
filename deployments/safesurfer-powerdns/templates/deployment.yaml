@@ -36,6 +36,7 @@ spec:
       serviceAccountName: {{ include "safesurfer-powerdns.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      dnsConfig: {{ .Values.dnsConfig }}
       dnsPolicy: {{ .Values.dnsPolicy | default "ClusterFirst" }}
       hostNetwork: {{ .Values.hostNetwork }}
       containers:
