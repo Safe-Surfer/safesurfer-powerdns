@@ -77,3 +77,13 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+extraVolumes: []
+  # - name: etc-pdns-recursor-conf
+  #   configMap:
+  #     name: safesurfer-powerdns-etc-pdns-recursor-conf
+
+extraVolumeMounts: []
+  # - name: etc-pdns-recursor-conf
+  #   mountPath: /etc/pdns/recursor.conf
+  #   subPath: recursor.conf

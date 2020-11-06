@@ -81,6 +81,9 @@ spec:
           volumeMounts:
             - name: app-lmdbtmpfs
               mountPath: /app/lmdbtmpfs
+          {{- if .Values.extraVolumeMounts }}
+            {{ toYaml .Values.extraVolumeMounts | trim | nindent 12 }}
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -96,3 +99,6 @@ spec:
       volumes:
         - name: app-lmdbtmpfs
           emptyDir: {}
+      {{- if .Values.extraVolumes }}
+        {{ toYaml .Values.extraVolumes | trim | nindent 8 }}
+      {{ end }}
