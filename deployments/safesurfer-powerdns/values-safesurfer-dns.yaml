@@ -1,0 +1,5 @@
+dnsPolicy: "None"
+dnsConfig:
+  nameservers:
+    - 104.197.28.121
+    - 104.155.237.225
