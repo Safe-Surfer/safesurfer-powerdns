@@ -1,12 +1,14 @@
 #!/bin/bash -x
 
-LOAD_BALANCER_IP="$(kubectl -n nginx-ingress get svc nginx-ingress-ingress-nginx-controller -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')"
+if [ -f /var/run/secrets/kubernetes.io/serviceaccount/namespace ]; then
+    LOAD_BALANCER_IP="$(kubectl -n nginx-ingress get svc nginx-ingress-ingress-nginx-controller -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')"
 
-kubectl get ns safesurfer-power-dev || kubectl create ns safesurfer-powerdns-dev
+    kubectl get ns safesurfer-power-dev || kubectl create ns safesurfer-powerdns-dev
 
-helm install safesurfer-powerdns \
-  -n safesurfer-powerdns-dev \
-  --set service.externalIPs[0]="$LOAD_BALANCER_IP" \
-  --set service.type=LoadBalancer \
-  --set service.externalTrafficPolicy=Local \
-  deployments/safesurfer-powerdns
+    helm install safesurfer-powerdns \
+         -n safesurfer-powerdns-dev \
+         --set service.externalIPs[0]="$LOAD_BALANCER_IP" \
+         --set service.type=LoadBalancer \
+         --set service.externalTrafficPolicy=Local \
+         deployments/safesurfer-powerdns
+fi
