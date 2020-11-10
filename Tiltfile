@@ -4,7 +4,8 @@ yaml = helm(
   namespace='safesurfer-powerdns-dev',
   values=['deployments/safesurfer-powerdns/values.yaml'],
   set=[
-      "service.type=NodePort"
+      "service.type=NodePort",
+      "service.tcpEnabled=true"
   ]
   )
 k8s_yaml(yaml)
