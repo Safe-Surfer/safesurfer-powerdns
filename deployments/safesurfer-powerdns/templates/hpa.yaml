@@ -4,7 +4,7 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: {{ include "safesurfer-powerdns.fullname" . }}
   labels:
-    app: safesurfer-powerdns
+    app: io.safesurfer.safesurfer-powerdns
   {{- if .Values.extraLabels }}
     {{- toYaml .Values.extraLabels | nindent 4 }}
   {{- end }}

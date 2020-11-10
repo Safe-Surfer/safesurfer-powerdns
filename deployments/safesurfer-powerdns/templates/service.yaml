@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ include "safesurfer-powerdns.fullname" . }}
   labels:
-    app: safesurfer-powerdns
+    app: io.safesurfer.safesurfer-powerdns
   {{- if .Values.extraLabels }}
     {{- toYaml .Values.extraLabels | nindent 4 }}
   {{- end }}
@@ -23,5 +23,5 @@ spec:
       protocol: UDP
       name: dns-udp
   selector:
-    app: safesurfer-powerdns
+    app: io.safesurfer.safesurfer-powerdns
     {{- include "safesurfer-powerdns.selectorLabels" . | nindent 4 }}

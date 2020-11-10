@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: {{ include "safesurfer-powerdns.fullname" . }}
   labels:
-    app: safesurfer-powerdns
+    app: io.safesurfer.safesurfer-powerdns
   {{- if .Values.extraLabels }}
     {{- toYaml .Values.extraLabels | nindent 4 }}
   {{- end }}
@@ -14,7 +14,7 @@ spec:
 {{- end }}
   selector:
     matchLabels:
-      app: safesurfer-powerdns
+      app: io.safesurfer.safesurfer-powerdns
       {{- include "safesurfer-powerdns.selectorLabels" . | nindent 6 }}
   template:
     metadata:
@@ -23,7 +23,7 @@ spec:
         {{- toYaml . | nindent 8 }}
     {{- end }}
       labels:
-        app: safesurfer-powerdns
+        app: io.safesurfer.safesurfer-powerdns
       {{- if .Values.extraLabels }}
         {{- toYaml .Values.extraLabels | nindent 8 }}
       {{- end }}
@@ -58,7 +58,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - "[ $(dig '@127.0.0.1' -p 5353 +noall +answer +notcp safesurfer.co.nz | awk '{print $1}') = \"safesurfer.co.nz.\" ]"
+                - "[ \"$(dig '@127.0.0.1' -p 5353 +noall +answer +notcp safesurfer.co.nz | awk '{print $1}')\" = \"safesurfer.co.nz.\" ]"
             timeoutSeconds: 20
             initialDelaySeconds: 3
             periodSeconds: 10
@@ -69,7 +69,7 @@ spec:
               command:
                 - /bin/sh
                 - -c
-                - "[ $(dig '@127.0.0.1' -p 5353 +noall +answer +notcp safesurfer.co.nz | awk '{print $1}') = \"safesurfer.co.nz.\" ]"
+                - "[ \"$(dig '@127.0.0.1' -p 5353 +noall +answer +notcp safesurfer.co.nz | awk '{print $1}')\" = \"safesurfer.co.nz.\" ]"
             timeoutSeconds: 20
             initialDelaySeconds: 3
             periodSeconds: 3

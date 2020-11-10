@@ -4,7 +4,7 @@ kind: Service
 metadata:
   name: {{ include "safesurfer-powerdns.fullname" . }}-tcp
   labels:
-    app: safesurfer-powerdns
+    app: io.safesurfer.safesurfer-powerdns
   {{- if .Values.extraLabels }}
     {{- toYaml .Values.extraLabels | nindent 4 }}
   {{- end }}
@@ -24,6 +24,6 @@ spec:
       protocol: TCP
       name: dns-tcp
   selector:
-    app: safesurfer-powerdns
+    app: io.safesurfer.safesurfer-powerdns
     {{- include "safesurfer-powerdns.selectorLabels" . | nindent 4 }}
 {{- end }}
