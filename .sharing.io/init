@@ -1,14 +1,15 @@
 #!/bin/bash -x
 
 if [ -f /var/run/secrets/kubernetes.io/serviceaccount/namespace ]; then
-    LOAD_BALANCER_IP="$(kubectl -n nginx-ingress get svc nginx-ingress-ingress-nginx-controller -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')"
+    export LOAD_BALANCER_IP="$(kubectl -n nginx-ingress get svc nginx-ingress-ingress-nginx-controller -o=jsonpath='{.status.loadBalancer.ingress[0].ip}')"
 
     kubectl get ns safesurfer-power-dev || kubectl create ns safesurfer-powerdns-dev
 
-    helm install safesurfer-powerdns \
-         -n safesurfer-powerdns-dev \
-         --set service.externalIPs[0]="$LOAD_BALANCER_IP" \
-         --set service.type=LoadBalancer \
-         --set service.externalTrafficPolicy=Local \
-         deployments/safesurfer-powerdns
+    /usr/local/bin/tmate-wait-for-socket.sh
+
+    echo "Building and installing Safe Surfer PowerDNS"
+    echo "Starting Tilt"
+    tmate -F -v -S $TMATE_SOCKET new-window -d -c "$PWD" -n tilt bash
+    tmate -S $TMATE_SOCKET send-keys -t tilt "export LOAD_BALANCER_IP=$LOAD_BALANCER_IP" Enter
+    tmate -S $TMATE_SOCKET send-keys -t tilt "tilt up --host 0.0.0.0 --hud" Enter
 fi
